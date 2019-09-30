@@ -1,3 +1,19 @@
-<p>
-  add-inventory works!
-</p>
+<form [formGroup]='inventoryForm' (ngSubmit)='onSubmit(inventoryForm)'>
+  <h2>Name: </h2>
+  <input type="text" formControlName='name'>
+
+  <h2>Description: </h2>
+  <textarea type="text" formControlName='description'></textarea>
+
+  <h2>Tags: </h2>
+  <input type="text" (keydown.enter)='addTags($event)' formControlName='tag'>
+  <br>
+  <span>Entered tags: </span>
+  {{inventory.tags.join(', ')}}
+
+  <h2>Price: </h2>
+  <input type="text">
+  <br>
+
+  <button type="submit" [disabled]="inventoryForm.invalid"> Send </button>
+</form>
