@@ -1,7 +1,5 @@
 export interface Price{
-    id: string;
-    price: number;
+    cost: number;
     currency: string;
     quantity: number;
-    unit: string;
   }

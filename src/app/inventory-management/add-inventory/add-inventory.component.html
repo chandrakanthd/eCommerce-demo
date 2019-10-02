@@ -1,19 +1,57 @@
 <form [formGroup]='inventoryForm' (ngSubmit)='onSubmit(inventoryForm)'>
-  <h2>Name: </h2>
-  <input type="text" formControlName='name'>
 
-  <h2>Description: </h2>
-  <textarea type="text" formControlName='description'></textarea>
+  <div class="form-group row">
+    <label for="name" class="col-sm-2 col-form-label">Name</label>
+    <div class="col-sm-10">
+      <input type="text" formControlName='name' placeholder="Item name" class="form-control" id="name" required>
+    </div>
+  </div>
 
-  <h2>Tags: </h2>
-  <input type="text" (keydown.enter)='addTags($event)' formControlName='tag'>
+  <div class="form-group row">
+    <label for="description" class="col-sm-2 col-form-label">Description</label>
+    <div class="col-sm-10">
+      <textarea type="text" formControlName='description' placeholder="Item description" class="form-control" id="description"></textarea>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="tags" class="col-sm-2 col-form-label">Tags</label>
+    <div class="col-sm-10">
+      <input type="text" (keydown.enter)='addTags($event)' [(ngModel)]='tagInput' [ngModelOptions]="{standalone: true}"
+        class="form-control" id="tags">
+      <label>Entered tags: </label>
+      {{tagList.join(', ')}}
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Cost</label>
+    <div class="col-sm-10">
+      <button (click)='addPrice($event)' class="btn btn-primary">+</button>
+      <div *ngFor='let element of price; let i = index'>
+        <div class="container">
+          <div class="row">
+            <label for="tags-{{i}}" class="col-form-label">Price</label>
+            <div class="col-sm-2">
+              <input type="number" min=0 [(ngModel)]='element.cost' [ngModelOptions]="{standalone: true}" class="form-control"
+                id="tags-{{i}}">
+            </div>
+
+            <label for="currency" class="col-form-label">Currency</label>
+            <div class="col-sm-2">
+              <select [(ngModel)]='element.currency' [ngModelOptions]="{standalone: true}" class="form-control" id="currency">
+                <option value='INR'>&#8377; rupees</option>
+                <option value='USD'>$ dollars</option>
+                <option value='GBP'>&#8356; pounds</option>
+                <option value='EUR'>&#8364; euros</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <br>
-  <span>Entered tags: </span>
-  {{inventory.tags.join(', ')}}
 
-  <h2>Price: </h2>
-  <input type="text">
-  <br>
-
-  <button type="submit" [disabled]="inventoryForm.invalid"> Send </button>
+  <button type="submit" class="btn btn-primary" [disabled]="inventoryForm.invalid">Submit</button>
 </form>
